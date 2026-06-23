@@ -27,12 +27,12 @@ function Nav() {
     </nav>
   );
 }
-function MyArticle() {
+function MyArticle({ title, desc }) {
   return (
     <section>
       <article>
-        <h2>HTML</h2>
-        <p>Hypertext Markup Language</p>
+        <h2>{title}</h2>
+        <p>{desc}</p>
       </article>
     </section>
   );
@@ -42,7 +42,7 @@ function App() {
     <>
       <Myheader />
       <Nav />
-      <MyArticle />
+      <MyArticle title="UI/UX 개발" desc="사용자 경험을 고려한 독립적이고 반응성 높은 화면 구현" />
     </>
   );
 }
