@@ -3,6 +3,8 @@ import Myheader from "./components/Myheader";
 import Nav from "./components/Nav";
 import MyArticle from "./components/MyArticle";
 import { useState } from "react";
+import Controls from "./components/controls";
+import CreateArticle from "./components/createArticle";
 
 function App() {
   console.log("App render");
@@ -21,15 +23,18 @@ function App() {
     },
     { id: 3, title: "애니메이션 구현", desc: "상태 변화에 따른 자연스럽고 동적인 화면 효과 구현" },
   ]);
+  const [maxId, setMaxid] = useState(3);
 
   const welcome = { title: "welcome", desc: "Welcome to react" };
 
   let _title = null;
   let _desc = null;
+  let _article = null;
 
   if (mode === "welcome") {
     _title = welcome.title;
     _desc = welcome.desc;
+    _article = <MyArticle title={_title} desc={_desc} />;
   } else if (mode === "read") {
     const selected = content.find(c => c.id === id);
     console.log(selected);
@@ -37,6 +42,19 @@ function App() {
       _title = selected.title;
       _desc = selected.desc;
     }
+    _article = <MyArticle title={_title} desc={_desc} />;
+  } else if (mode === "create") {
+    _article = (
+      <CreateArticle
+        onSubmit={(_title, _desc) => {
+          const newId = maxId + 1;
+
+          let _contents = content.concat({ id: newId, title: _title, desc: _desc });
+          setContent(_contents);
+          setMaxid(newId);
+        }}
+      />
+    );
   }
   return (
     <>
@@ -56,15 +74,22 @@ function App() {
         >
           {subject.title}
         </h1>
-        <p>{subject.desc}</p> 
-        </header> */}
+        <p>{subject.desc}</p>
+      </header> */}
       <Nav
         data={content}
-        onChangeMode={() => {
+        onChangeMode={_id => {
           setMode("read");
+          setId(_id);
         }}
       />
-      <MyArticle title={_title} desc={_desc} />
+      {_article}
+      <hr />
+      <Controls
+        onChangeMode={() => {
+          setMode("create");
+        }}
+      />
     </>
   );
 }
