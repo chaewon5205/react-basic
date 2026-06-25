@@ -35,7 +35,13 @@ function ArticleForm({ initTitle = "", initDesc = "", initLevel = "", onSubmit }
       </div>
       <div>
         <label htmlFor="level">level</label>
-        <input type="number" name="level" id="level" value={content.level} onChange={handleChange} />
+        <input
+          type="number"
+          name="level"
+          id="level"
+          value={content.level}
+          onChange={handleChange}
+        />
       </div>
       <button>Submit</button>
     </form>
